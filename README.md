@@ -1,2 +1,1 @@
-# tiohex
-primeiro projeto visual studio code (tio hex)
+# Trex-Etapa-0

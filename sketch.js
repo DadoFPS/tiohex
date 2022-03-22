@@ -1,49 +1,38 @@
-var quadrado;
+var hex;
+var animation1;
+var solo;
+var animation2;
 
+function preload () {
 
+  animation1 = loadAnimation ("trex1.png","trex3.png","trex4.png");
+  animation2 = loadImage ("ground1.png");
+  
+  
+  }
 
-
-function setup() {
-  createCanvas(400,400);
-  quadrado = createSprite (200, 200,50,50);
+function setup(){
+  createCanvas(600,200);
+  hex = createSprite (50,110,20,20);
+  hex.addAnimation ("correndo",animation1);
+  hex.scale = 0.5;
+  solo = createSprite (200,180,400,20);
+  solo.addImage ("chao",animation2);
 }
 
-function draw() 
-{
-  background(30);
-  movimentar ();
-  
-  
-  drawSprites ();
+function draw(){
+  background("white");
+  drawSprites();
+  pular ();
+  hex.collide (solo);
 }
+function pular () {
 
-function movimentar () {
-  
-  
-  if (keyDown("left")) {
-    
-    quadrado.x -=5;
-    
-    
-    
-  }if (keyDown("right")){
-    
-    
-    quadrado.x +=5;
-    
-  }if (keyDown ("up")){
-    
-    quadrado.y -=5;
-
-
-
-  }if (keyDown("down")){
-
-
-    quadrado.y +=5;
+  if (keyDown ("up")) {
+    hex.velocityY = -10;
 
   }
- 
+  	hex.velocityY += 0.8;
+
+
 }
-
-
