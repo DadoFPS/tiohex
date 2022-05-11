@@ -9,8 +9,16 @@ var obstaculo;
 
 var pontos = 0;
 
+var groupobs;
+
+
+var groupnvu;
+
 
 var newImage;
+
+
+var estadodejogo = "play";
 
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -42,6 +50,10 @@ function setup() {
   ground.x = ground.width /2;
   ground.velocityX = -4;
 
+  groupobs = new Group ();
+
+  groupnvu = new Group ();
+
 
   
   invisibleGround = createSprite(200,190,400,10);
@@ -57,21 +69,58 @@ function draw() {
 
   text ("pontos:" + pontos,500,50);
   
-  if(keyDown("up") && trex.y>=161) {
-    trex.velocityY = -10;
-  }
-  
-  trex.velocityY = trex.velocityY + 0.8
-  
-  if (ground.x < 0){
-    ground.x = ground.width/2;
-  }
   
   trex.collide(invisibleGround);
+ 
+  
+
+  
+ 
   
   
-  spawnClouds();
-  spawnObs ();
+  
+  
+
+
+  if (estadodejogo === "play") {
+
+    spawnClouds();
+    spawnObs ();
+
+      if (trex.isTouching (groupobs)) {
+
+        estadodejogo = "derrota";
+
+
+      }
+    
+   
+    
+    if(keyDown("up") && trex.y>=161) {
+      trex.velocityY = -10;
+    }
+    if (ground.x < 0){
+      ground.x = ground.width/2;
+    }
+    
+    
+    trex.velocityY = trex.velocityY + 0.8
+  }else if (estadodejogo === "derrota") {
+
+    ground.velocityX = 0;
+
+    trex.velocityY = 0;
+
+
+    groupobs.setVelocityXEach (0);
+
+
+    groupnvu.setVelocityXEach (0);
+
+
+
+
+  }
   
   drawSprites();
 }
@@ -89,6 +138,9 @@ function spawnClouds() {
     cloud.depth = trex.depth
     trex.depth = trex.depth + 1;
     cloud.lifetime = 220;
+
+    groupnvu.add (cloud);
+
     }
 }
 
@@ -133,6 +185,8 @@ if (frameCount % 100 === 0) {
   obstaculo.velocityX= -4;
   obstaculo.scale = 0.4;
   obstaculo.lifetime = 220;
+
+  groupobs.add (obstaculo);
 
 }
 
